@@ -15,10 +15,11 @@
  */
 package okhttp3;
 
+import okhttp3.internal.http.HttpMethod;
+
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
-import okhttp3.internal.http.HttpMethod;
 
 /**
  * An HTTP request. Instances of this class are immutable if their {@link #body} is null or itself
@@ -30,6 +31,7 @@ public final class Request {
   private final Headers headers;
   private final RequestBody body;
   private final Object tag;
+  private final int priority;
 
   private volatile URI javaNetUri; // Lazily initialized.
   private volatile CacheControl cacheControl; // Lazily initialized.
@@ -40,6 +42,7 @@ public final class Request {
     this.headers = builder.headers.build();
     this.body = builder.body;
     this.tag = builder.tag != null ? builder.tag : this;
+    this.priority=builder.priority;
   }
 
   public HttpUrl url() {
@@ -68,6 +71,10 @@ public final class Request {
 
   public Object tag() {
     return tag;
+  }
+
+  public int priority(){
+    return priority;
   }
 
   public Builder newBuilder() {
@@ -103,6 +110,7 @@ public final class Request {
     private Headers.Builder headers;
     private RequestBody body;
     private Object tag;
+    private int priority;
 
     public Builder() {
       this.method = "GET";
@@ -115,6 +123,7 @@ public final class Request {
       this.body = request.body;
       this.tag = request.tag;
       this.headers = request.headers.newBuilder();
+      this.priority=request.priority;
     }
 
     public Builder url(HttpUrl url) {
@@ -249,6 +258,11 @@ public final class Request {
      */
     public Builder tag(Object tag) {
       this.tag = tag;
+      return this;
+    }
+
+    public Builder priority(int priority){
+      this.priority=priority;
       return this;
     }
 
