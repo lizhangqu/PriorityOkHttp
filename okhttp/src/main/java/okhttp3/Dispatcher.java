@@ -19,10 +19,7 @@ import okhttp3.RealCall.AsyncCall;
 import okhttp3.internal.Util;
 
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.PriorityBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Policy on when async requests are executed.
@@ -68,7 +65,7 @@ public final class Dispatcher {
 //                  new SynchronousQueue<Runnable>(), Util.threadFactory("OkHttp Dispatcher", false));
 
             executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS,
-                    new PriorityBlockingQueue<Runnable>(60, new AsycCallComparator()), Util.threadFactory("OkHttp Dispatcher", false));
+                    new PriorityBlockingQueue<Runnable>(60, new AsycCallComparator<Runnable>()), Util.threadFactory("OkHttp Dispatcher", false));
         }
         return executorService;
     }

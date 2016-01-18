@@ -100,10 +100,12 @@ final class RealCall implements Call {
         return canceled;
     }
 
-    final class AsyncCall extends NamedRunnable implements Comparable<AsyncCall> {
+    final class AsyncCall extends NamedRunnable{
         private final Callback responseCallback;
         private final boolean forWebSocket;
         private int priority;
+
+
 
         private AsyncCall(Callback responseCallback, boolean forWebSocket) {
             super("OkHttp %s", originalRequest.url().toString());
@@ -158,14 +160,6 @@ final class RealCall implements Call {
             } finally {
                 client.dispatcher().finished(this);
             }
-        }
-
-        @Override
-        public int compareTo(AsyncCall other) {
-            if (other == null) {
-                return -1;
-            }
-            return other.priority() - this.priority();
         }
     }
 
