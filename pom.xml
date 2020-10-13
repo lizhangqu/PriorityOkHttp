@@ -57,7 +57,7 @@
     <android.version>4.1.1.4</android.version>
 
     <!-- Test Dependencies -->
-    <junit.version>4.11</junit.version>
+    <junit.version>4.13.1</junit.version>
   </properties>
 
   <scm>
